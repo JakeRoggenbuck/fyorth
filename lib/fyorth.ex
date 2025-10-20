@@ -4,8 +4,6 @@ defmodule Fyorth do
   """
 
   @doc """
-  Hello world.
-
   ## Examples
 
       iex> Fyorth.words("a b")

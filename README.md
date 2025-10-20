@@ -123,6 +123,10 @@ def sum_product(a) do
 end
 ```
 
+### Other Observations
+
+I'm noticing that I am having a hard time writing complicated functions. I'm fine with functions in something like Rust or Python, where they might have 10 or 20 lines. But I'm finding it very hard to do something similar in elixir because I do not like nested code, and to make something more complex, you need to next it, instead of having it procedural. This makes me naturally separate logic into its own function instead of nesting more than twice or three times. I guess here I should try the pipe operator more?
+
 ## Name Origin
 
 I called it "Forth" with an added letter "y" to get "Fyorth". Perhaps I will retroactively make a reason for why I added a "y" to the name.
