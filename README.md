@@ -1,6 +1,6 @@
 # Fyorth
 
-Fyorth is a programming language similar to [Forth](https://en.wikipedia.org/wiki/Forth_(programming_language)), written in [Elixir](https://elixir-lang.org).
+🟣 Fyorth is a programming language similar to [Forth](https://en.wikipedia.org/wiki/Forth_(programming_language)), written in [Elixir](https://elixir-lang.org).
 
 ### Learning Elixir
 
