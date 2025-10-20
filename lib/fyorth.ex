@@ -31,7 +31,7 @@ defmodule Fyorth do
   ## Examples
 
       iex> Fyorth.tokenize(":")
-      {:ok, 0}
+      {:ok, 0, ":"}
 
   """
   def tokenize(word) do
@@ -67,13 +67,22 @@ defmodule Fyorth do
   ## Examples
 
       iex> Fyorth.code_gen_line([{:ok, 0, ":"}, {:ok, 1, "1"}, {:ok, 1, "2"}, {:ok, 2, "+"}])
-      "mov rax, 1\\nadd rax, 2"
+      "mov rax, 1\\nadd rax, 2\\n"
+
+      iex> Fyorth.code_gen_line([{:ok, 0, ":"}, {:ok, 1, "8"}, {:ok, 1, "4"}, {:ok, 2, "-"}])
+      "mov rax, 8\\nsub rax, 4\\n"
 
   """
   def code_gen_line(line) do
-    case Enum.at(line, 3) do
-      {:ok, 2, _} -> "mov rax, " <> "\nadd rax, "
-      _ -> "-"
+    case line do
+      [{:ok, 0, _}, {:ok, 1, a}, {:ok, 1, b}, {:ok, 2, "+"}] ->
+        "mov rax, " <> a <> "\nadd rax, " <> b <> "\n"
+
+      [{:ok, 0, _}, {:ok, 1, a}, {:ok, 1, b}, {:ok, 2, "-"}] ->
+        "mov rax, " <> a <> "\nsub rax, " <> b <> "\n"
+
+      _ ->
+        "-"
     end
   end
 
@@ -81,7 +90,7 @@ defmodule Fyorth do
   ## Examples
 
       iex> Fyorth.compile_line([{:ok, 0, ":"}, {:ok, 1, "1"}, {:ok, 1, "2"}, {:ok, 2, "+"}])
-      "mov rax, 1\\nadd rax, 2"
+      "mov rax, 1\\nadd rax, 2\\n"
 
   """
   def compile_line(line) do

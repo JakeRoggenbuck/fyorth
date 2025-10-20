@@ -11,7 +11,12 @@ defmodule FyorthTest do
   end
 
   test "tokenize line" do
-    assert Fyorth.tokenize_line(": 1 2 +") == [{:ok, 0, ":"}, {:ok, 1, "1"}, {:ok, 1, "2"}, {:ok, 2, "+"}]
+    assert Fyorth.tokenize_line(": 1 2 +") == [
+             {:ok, 0, ":"},
+             {:ok, 1, "1"},
+             {:ok, 1, "2"},
+             {:ok, 2, "+"}
+           ]
   end
 
   test "tokenize" do
