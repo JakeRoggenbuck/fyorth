@@ -56,7 +56,20 @@ defmodule Fyorth do
     |> Enum.map(&Fyorth.tokenize/1)
   end
 
-  defp number_string?(word) when is_binary(word) do
+  @doc """
+  ## Examples
+
+      iex> Fyorth.number_string?("1")
+      true
+
+      iex> Fyorth.number_string?("9")
+      true
+
+      iex> Fyorth.number_string?("a")
+      false
+
+  """
+  def number_string?(word) when is_binary(word) do
     case Integer.parse(word) do
       {_, ""} -> true
       _ -> false
