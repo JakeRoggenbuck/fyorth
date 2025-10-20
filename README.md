@@ -2,13 +2,13 @@
 
 🟣 Fyorth is a programming language similar to [Forth](https://en.wikipedia.org/wiki/Forth_(programming_language)), written in [Elixir](https://elixir-lang.org).
 
-### Learning Elixir
+## Learning Elixir
 
 This is one of my first projects using Elixir and I wanted to note down what my thoughts are about the language.
 
-#### What I like
+### What I like
 
-##### 1. Doc Tests
+#### 1. Doc Tests
 
 I really like the doc tests.
 
@@ -27,7 +27,7 @@ end
 
 These docs test the `lines` function, while documenting how it should be used. I appreciate these types of tests.
 
-##### 2. Unit Testing
+#### 2. Unit Testing
 
 ```elixir
 defmodule FyorthTest do
@@ -42,9 +42,9 @@ end
 
 It was great having file exist by default. It was easy to start testing. I like when languages guide you to unit testing and make it super easy.
 
-#### What I'm still getting used to
+### What I'm still getting used to
 
-##### 1. Testing Private Functions
+#### 1. Testing Private Functions
 
 ```elixir
 defp number_string?(word) when is_binary(word) do
@@ -59,6 +59,6 @@ I defined this private function but I cannot test it with the doc tests and it c
 
 However, I'm still learning and maybe after some research or more usage, I'll understand and come to like this decision / limitation.
 
-### Name Origin
+## Name Origin
 
-I called it "Forth" and added the letter "y" to get "Fyorth". Perhaps I will retroactively make a reason for why I added a "y".
+I called it "Forth" with an added letter "y" to get "Fyorth". Perhaps I will retroactively make a reason for why I added a "y" to the name.
