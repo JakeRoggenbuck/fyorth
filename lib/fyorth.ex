@@ -31,15 +31,15 @@ defmodule Fyorth do
   ## Examples
 
       iex> Fyorth.tokenize(":")
-      0
+      {:ok, 0}
 
   """
   def tokenize(word) do
     cond do
-      word == "+" -> 2
-      number_string?(word) -> 1
-      word == ":" -> 0
-      true -> :unknown
+      word == "+" -> {:ok, 2}
+      number_string?(word) -> {:ok, 1}
+      word == ":" -> {:ok, 0}
+      true -> {:err, -1}
     end
   end
 
@@ -47,7 +47,7 @@ defmodule Fyorth do
   ## Examples
 
       iex> Fyorth.compile_line(": 1 2 +")
-      [0, 1, 1, 2]
+      [{:ok, 0}, {:ok, 1}, {:ok, 1}, {:ok, 2}]
 
   """
   def compile_line(line) do

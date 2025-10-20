@@ -77,6 +77,52 @@ It'll take some time to learn to write code that does not mutate state. I have a
 
 This is obviously a good design decision for specific use cases. Elixir does not lose any points for being a functional language without mutation of course.
 
+#### 3. Static Typing
+
+It feels worrisome to me to not have types or type annotations. I wrote a function that can return either an integer or an atom.
+```elixir
+def tokenize(word) do
+  cond do
+    word == "+" -> 2
+    number_string?(word) -> 1
+    word == ":" -> 0
+    true -> :unknown
+  end
+end
+```
+
+I know this is the case for dynamically typed languages I often use, but it feels weird in a language like elixir that tries to reduce the amount of bugs you can write by adding restrictions on your expressiveness (e.g. by enforcing immutability). Even in Python, you can add type annotations. TypeScript was also made to add types and some amount enforcement to the language.
+
+I'll likely change this function to return either an int or an atom. I may also change it to return a hashmap with `:err` or `:ok` and then the value. I do like how this can be done.
+
+I went back and changed it to use the ok and err hashmap.
+
+```elixir
+def tokenize(word) do
+  cond do
+    word == "+" -> {:ok, 2}
+    number_string?(word) -> {:ok, 1}
+    word == ":" -> {:ok, 0}
+    true -> {:err, -1}
+  end
+end
+```
+
+This is better, but I have to be the one to enforce checking that it's the `:ok` variant. I would like the compiler to enforce this rule. I would also like it to enforce the return type too.
+
+It seems like you can add `@spec` but the docs read "Elixir is still a dynamic language. That means all information about a type will be ignored by the compiler, but could be used by other tools"[\[1\]](https://elixirschool.com/en/lessons/advanced/typespec). Similar to how Python works.
+
+Here is the example:
+
+```elixir
+@spec sum_product(integer) :: integer
+def sum_product(a) do
+  [1, 2, 3]
+  |> Enum.map(fn el -> el * a end)
+  |> Enum.sum()
+end
+```
+
 ## Name Origin
 
 I called it "Forth" with an added letter "y" to get "Fyorth". Perhaps I will retroactively make a reason for why I added a "y" to the name.

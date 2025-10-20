@@ -11,15 +11,15 @@ defmodule FyorthTest do
   end
 
   test "compile line" do
-    assert Fyorth.compile_line(": 1 2 +") == [0, 1, 1, 2]
+    assert Fyorth.compile_line(": 1 2 +") == [{:ok, 0}, {:ok, 1}, {:ok, 1}, {:ok, 2}]
   end
 
   test "tokenize" do
-    assert Fyorth.tokenize("+") == 2
-    assert Fyorth.tokenize(":") == 0
-    assert Fyorth.tokenize("1") == 1
-    assert Fyorth.tokenize("9") == 1
+    assert Fyorth.tokenize("+") == {:ok, 2}
+    assert Fyorth.tokenize(":") == {:ok, 0}
+    assert Fyorth.tokenize("1") == {:ok, 1}
+    assert Fyorth.tokenize("9") == {:ok, 1}
 
-    assert Fyorth.tokenize("ö") == :unknown
+    assert Fyorth.tokenize("ö") == {:err, -1}
   end
 end
