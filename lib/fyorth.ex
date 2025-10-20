@@ -51,7 +51,7 @@ defmodule Fyorth do
 
   """
   def compile_line(line) do
-    line |> Fyorth.words() |> Enum.map(fn (x) -> Fyorth.tokenize(x) end)
+    line |> Fyorth.words() |> Enum.map(&Fyorth.tokenize/1)
   end
 
   defp number_string?(word) when is_binary(word) do
