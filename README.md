@@ -42,6 +42,18 @@ end
 
 It was great having file exist by default. It was easy to start testing. I like when languages guide you to unit testing and make it super easy.
 
+#### 3. Pipe Operator
+
+```elixir
+def compile_line(line) do
+  line
+  |> Fyorth.words()
+  |> Enum.map(&Fyorth.tokenize/1)
+end
+```
+
+This is a great idea. It makes sense and it's executed well.
+
 ### What I'm still getting used to
 
 #### 1. Testing Private Functions
@@ -58,6 +70,12 @@ end
 I defined this private function but I cannot test it with the doc tests and it cannot be imported in the test file to unit test. For this example, I can just make it public, but I have a hard time with a language giving you private functions or tested functions but never both. I saw examples of libraries that make the function private just for testing and other work-arounds, but I believe this is a limitation in a language.
 
 However, I'm still learning and maybe after some research or more usage, I'll understand and come to like this decision / limitation.
+
+#### 2. Mutability
+
+It'll take some time to learn to write code that does not mutate state. I have a decent amount of practice using Lisp, not I haven't written anything large with Lisp.
+
+This is obviously a good design decision for specific use cases. Elixir does not lose any points for being a functional language without mutation of course.
 
 ## Name Origin
 
