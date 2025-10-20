@@ -36,24 +36,59 @@ defmodule Fyorth do
   """
   def tokenize(word) do
     cond do
-      word == "+" -> {:ok, 2}
-      number_string?(word) -> {:ok, 1}
-      word == ":" -> {:ok, 0}
-      true -> {:err, -1}
+      word == "+" -> {:ok, 2, word}
+      number_string?(word) -> {:ok, 1, word}
+      word == ":" -> {:ok, 0, word}
+      true -> {:err, -1, word}
     end
   end
 
   @doc """
   ## Examples
 
-      iex> Fyorth.compile_line(": 1 2 +")
-      [{:ok, 0}, {:ok, 1}, {:ok, 1}, {:ok, 2}]
+      iex> Fyorth.tokenize_line(": 1 2 +")
+      [{:ok, 0, ":"}, {:ok, 1, "1"}, {:ok, 1, "2"}, {:ok, 2, "+"}]
 
   """
-  def compile_line(line) do
+  def tokenize_line(line) do
     line
     |> Fyorth.words()
     |> Enum.map(&Fyorth.tokenize/1)
+  end
+
+  def correct_line(line) do
+    Enum.all?(line, fn
+      {:ok, _, _} -> true
+      {:err, _, _} -> false
+    end)
+  end
+
+  @doc """
+  ## Examples
+
+      iex> Fyorth.code_gen_line([{:ok, 0, ":"}, {:ok, 1, "1"}, {:ok, 1, "2"}, {:ok, 2, "+"}])
+      "mov rax, 1\\nadd rax, 2"
+
+  """
+  def code_gen_line(line) do
+    case Enum.at(line, 3) do
+      {:ok, 2, _} -> "mov rax, " <> "\nadd rax, "
+      _ -> "-"
+    end
+  end
+
+  @doc """
+  ## Examples
+
+      iex> Fyorth.compile_line([{:ok, 0, ":"}, {:ok, 1, "1"}, {:ok, 1, "2"}, {:ok, 2, "+"}])
+      "mov rax, 1\\nadd rax, 2"
+
+  """
+  def compile_line(line) do
+    cond do
+      line |> Fyorth.correct_line() -> Fyorth.code_gen_line(line)
+      true -> "wrong!"
+    end
   end
 
   @doc """
