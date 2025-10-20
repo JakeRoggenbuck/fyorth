@@ -13,6 +13,6 @@ defmodule Fyorth do
 
   """
   def words(line) do
-    String.split(line)
+    line |> String.split
   end
 end
