@@ -19,5 +19,7 @@ defmodule FyorthTest do
     assert Fyorth.tokenize(":") == 0
     assert Fyorth.tokenize("1") == 1
     assert Fyorth.tokenize("9") == 1
+
+    assert Fyorth.tokenize("ö") == :unknown
   end
 end
