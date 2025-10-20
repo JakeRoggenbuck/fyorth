@@ -13,7 +13,7 @@ defmodule Fyorth do
 
   """
   def words(line) do
-    line |> String.split
+    line |> String.split()
   end
 
   @doc """
@@ -51,7 +51,9 @@ defmodule Fyorth do
 
   """
   def compile_line(line) do
-    line |> Fyorth.words() |> Enum.map(&Fyorth.tokenize/1)
+    line
+    |> Fyorth.words()
+    |> Enum.map(&Fyorth.tokenize/1)
   end
 
   defp number_string?(word) when is_binary(word) do
