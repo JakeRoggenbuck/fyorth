@@ -46,7 +46,7 @@ It was great having file exist by default. It was easy to start testing. I like 
 
 ##### 1. Testing Private Functions
 
-```
+```elixir
 defp number_string?(word) when is_binary(word) do
   case Integer.parse(word) do
     {_, ""} -> true
