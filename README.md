@@ -110,7 +110,7 @@ end
 
 This is better, but I have to be the one to enforce checking that it's the `:ok` variant. I would like the compiler to enforce this rule. I would also like it to enforce the return type too.
 
-It seems like you can add `@spec` but the docs read "Elixir is still a dynamic language. That means all information about a type will be ignored by the compiler, but could be used by other tools"[\[1\]](https://elixirschool.com/en/lessons/advanced/typespec). Similar to how Python works.
+It seems like you can add `@spec` but the docs read "Elixir is still a dynamic language. That means all information about a type will be ignored by the compiler, but could be used by other tools" [[1](https://elixirschool.com/en/lessons/advanced/typespec)]. Similar to how Python works.
 
 Here is the example:
 
