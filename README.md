@@ -58,3 +58,7 @@ end
 I defined this private function but I cannot test it with the doc tests and it cannot be imported in the test file to unit test. For this example, I can just make it public, but I have a hard time with a language giving you private functions or tested functions but never both. I saw examples of libraries that make the function private just for testing and other work-arounds, but I believe this is a limitation in a language.
 
 However, I'm still learning and maybe after some research or more usage, I'll understand and come to like this decision / limitation.
+
+### Name Origin
+
+I called it "Forth" and added the letter "y" to get "Fyorth". Perhaps I will retroactively make a reason for why I added a "y".
