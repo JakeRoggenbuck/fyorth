@@ -21,8 +21,8 @@ defmodule Fyorth do
       [": 1 2 +", ": 2 3 +"]
 
   """
-  def lines(context) do
-    context |> String.split("\n")
+  def lines(content) do
+    content |> String.split("\n")
   end
 
   @doc """
@@ -54,7 +54,7 @@ defmodule Fyorth do
     |> Enum.map(&Fyorth.tokenize/1)
   end
 
-  def correct_line(line) do
+  def correct_line?(line) do
     Enum.all?(line, fn
       {:ok, _, _} -> true
       {:err, _, _} -> false
@@ -87,15 +87,29 @@ defmodule Fyorth do
   @doc """
   ## Examples
 
-      iex> Fyorth.compile_line([{:ok, 0, ":"}, {:ok, 1, "1"}, {:ok, 1, "2"}, {:ok, 2, "+"}])
+      iex> Fyorth.compile_line_token_array([{:ok, 0, ":"}, {:ok, 1, "1"}, {:ok, 1, "2"}, {:ok, 2, "+"}])
       "mov rax, 1\\nadd rax, 2\\n"
 
   """
-  def compile_line(line) do
+  def compile_line_token_array(token_array) do
     cond do
-      line |> Fyorth.correct_line() -> Fyorth.code_gen_line(line)
+      token_array |> Fyorth.correct_line?() -> Fyorth.code_gen_line(token_array)
       true -> "wrong!"
     end
+  end
+
+  @doc """
+  ## Examples
+
+      iex> Fyorth.compile_program(": 1 2 +\\n: 2 3 +")
+      ["mov rax, 1\\nadd rax, 2\\n", "mov rax, 2\\nadd rax, 3\\n"]
+
+  """
+  def compile_program(content) do
+    content
+    |> Fyorth.lines()
+    |> Enum.map(&Fyorth.tokenize_line/1)
+    |> Enum.map(&Fyorth.compile_line_token_array/1)
   end
 
   @doc """
