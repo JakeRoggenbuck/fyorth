@@ -145,30 +145,30 @@ I was getting an error that it got a string but wanted something else. I was con
 I changed the code to reflect this info and added something to make each line into a token first.
 
 ```elixir
-  @doc """
-  ## Examples
+@doc """
+## Examples
 
-      iex> Fyorth.compile_program(": 1 2 +\\n: 2 3 +")
-      ["mov rax, 1\\nadd rax, 2\\n", "mov rax, 2\\nadd rax, 3\\n"]
+    iex> Fyorth.compile_program(": 1 2 +\\n: 2 3 +")
+    ["mov rax, 1\\nadd rax, 2\\n", "mov rax, 2\\nadd rax, 3\\n"]
 
-  """
-  def compile_program(content) do
-    content
-    |> Fyorth.lines()
-    |> Enum.map(&Fyorth.tokenize_line/1)
-    |> Enum.map(&Fyorth.compile_line_token_array/1)
-  end
+"""
+def compile_program(content) do
+  content
+  |> Fyorth.lines()
+  |> Enum.map(&Fyorth.tokenize_line/1)
+  |> Enum.map(&Fyorth.compile_line_token_array/1)
+end
 ```
 
 I also called `line`, `token_array` in the function I was calling.
 
 ```elixir
-  def compile_line_token_array(token_array) do
-    cond do
-      token_array |> Fyorth.correct_line?() -> Fyorth.code_gen_line(token_array)
-      true -> "wrong!"
-    end
+def compile_line_token_array(token_array) do
+  cond do
+    token_array |> Fyorth.correct_line?() -> Fyorth.code_gen_line(token_array)
+    true -> "wrong!"
   end
+end
 ```
 
 Here is a place I would want type annotations and it would make sure I have less bugs.
