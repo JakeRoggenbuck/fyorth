@@ -123,6 +123,56 @@ def sum_product(a) do
 end
 ```
 
+I just ran into a bug where the data type of a function was wrong. Here is the code that I was dealing with.
+
+```elixir
+@doc """
+## Examples
+
+    iex> Fyorth.compile_program(": 1 2 +\\n: 2 3 +")
+    ["mov rax, 1\\nadd rax, 2\\n", "mov rax, 2\\nadd rax, 3\\n"]
+
+"""
+def compile_program(content) do
+    content
+    |> Fyorth.lines()
+    |> Enum.map(&Fyorth.compile_line/1)
+end
+```
+
+I was getting an error that it got a string but wanted something else. I was confused because compile_line takes in one parameter, and it's `line`. That's surely a string right? Well, I had made the mistake of calling an array of tokens `line` and since I did not have type information, I forgot what it was supposed to be. I renamed the function from `compile_line` to `compile_line_token_array`, but now I am just adding type information in the function name, instead of where it should go, which would be a type annotation of type declaration.
+
+I changed the code to reflect this info and added something to make each line into a token first.
+
+```elixir
+  @doc """
+  ## Examples
+
+      iex> Fyorth.compile_program(": 1 2 +\\n: 2 3 +")
+      ["mov rax, 1\\nadd rax, 2\\n", "mov rax, 2\\nadd rax, 3\\n"]
+
+  """
+  def compile_program(content) do
+    content
+    |> Fyorth.lines()
+    |> Enum.map(&Fyorth.tokenize_line/1)
+    |> Enum.map(&Fyorth.compile_line_token_array/1)
+  end
+```
+
+I also called `line`, `token_array` in the function I was calling.
+
+```elixir
+  def compile_line_token_array(token_array) do
+    cond do
+      token_array |> Fyorth.correct_line?() -> Fyorth.code_gen_line(token_array)
+      true -> "wrong!"
+    end
+  end
+```
+
+Here is a place I would want type annotations and it would make sure I have less bugs.
+
 ### Other Observations
 
 I'm noticing that I am having a hard time writing complicated functions. I'm fine with functions in something like Rust or Python, where they might have 10 or 20 lines. But I'm finding it very hard to do something similar in elixir because I do not like nested code, and to make something more complex, you need to next it, instead of having it procedural. This makes me naturally separate logic into its own function instead of nesting more than twice or three times. I guess here I should try the pipe operator more?
